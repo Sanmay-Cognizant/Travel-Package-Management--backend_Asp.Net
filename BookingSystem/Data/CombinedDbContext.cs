@@ -20,6 +20,13 @@ namespace BookingSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().ToTable("tUsers");
+            modelBuilder.Entity<Package>().ToTable("tPackages");
+            modelBuilder.Entity<Booking>().ToTable("tBookings");
+            modelBuilder.Entity<Payment>().ToTable("tPayments");
+            modelBuilder.Entity<Review>().ToTable("tReviews");
+            modelBuilder.Entity<Assistance>().ToTable("tAssistanceRequests");
+            modelBuilder.Entity<Insurance>().ToTable("tInsurances");
             // Booking -> User
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)

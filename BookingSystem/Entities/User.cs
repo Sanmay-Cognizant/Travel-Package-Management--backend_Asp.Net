@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Entities
 {
+    [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(ContactNumber), IsUnique = true)]
     public class User
     {
         [Key]
@@ -13,6 +16,7 @@ namespace BookingSystem.Entities
         public string Name { get; set; }
 
         [Required]
+
         [EmailAddress]
         public string Email { get; set; }
 
@@ -32,6 +36,6 @@ namespace BookingSystem.Entities
         public ICollection<Insurance>? Insurances { get; set; }
         public ICollection<Assistance>? Assistances { get; set; }
 
-      
+
     }
 }

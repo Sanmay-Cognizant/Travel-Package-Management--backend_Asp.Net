@@ -24,6 +24,22 @@ namespace BookingSystem.Repository
         {
             using (var context = new CombinedDbContext())
             {
+                bool emailExists = await context.Users.AnyAsync(u => u.Email == newuser.Email);
+                bool contactExists = await context.Users.AnyAsync(u => u.ContactNumber == newuser.ContactNumber);
+
+                if (emailExists || contactExists)
+                {
+                    string errorMessage = "User registration failed due to duplicate ";
+                    if (emailExists && contactExists)
+                        errorMessage += "email and contact number.";
+                    else if (emailExists)
+                        errorMessage += "email.";
+                    else
+                        errorMessage += "contact number.";
+
+                    throw new InvalidOperationException(errorMessage);
+                }
+
                 await context.Users.AddAsync(newuser);
                 await context.SaveChangesAsync();
             }

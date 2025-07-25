@@ -38,8 +38,15 @@ namespace TravelBookingAPI.Controllers
                 Role = string.IsNullOrEmpty(newUserRequest.Role) ? "Customer" : newUserRequest.Role
             };
 
-            await _userRepository.AddUsers(newUser);
-            return Ok(new { message = $"User registered successfully as {newUser.Role}" });
+            try
+            {
+                await _userRepository.AddUsers(newUser);
+                return Ok(new { message = $"User registered successfully as {newUser.Role}" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { error = ex.Message }); // 409 Conflict
+            }
         }
 
         // 🟢 Public Registration
@@ -59,8 +66,15 @@ namespace TravelBookingAPI.Controllers
                 Role = "Customer"
             };
 
-            await _userRepository.AddUsers(newUser);
-            return Ok(new { message = "User registered successfully as Customer" });
+            try
+            {
+                await _userRepository.AddUsers(newUser);
+                return Ok(new { message = "User registered successfully as Customer" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { error = ex.Message }); // 409 Conflict
+            }
         }
 
         // 🔓 Login Endpoint
