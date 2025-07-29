@@ -10,6 +10,7 @@ namespace BookingSystem.Repository
         Task<User> ValidateUser(string email, string password);
         Task AddUsers(User newuser);
         Task<List<User>> GetAllUsers();
+        Task<List<UserBasicDTO>> GetBasicUserInfo();
         Task<List<User>> GetUsersByName(string UserName);
         Task UpdateUser(long UserId, UserDTO newuser);
         Task DeleteUser(long userId);

@@ -45,6 +45,21 @@ namespace BookingSystem.Repository
             }
         }
 
+        public async Task<List<UserBasicDTO>> GetBasicUserInfo()
+        {
+            using (var context = new CombinedDbContext())
+            {
+                return await context.Users
+                    .Select(u => new UserBasicDTO
+                    {
+                        UserID = u.UserID,
+                        Name = u.Name,
+                        Email = u.Email
+                    })
+                    .ToListAsync();
+            }
+        }
+
         public async Task<List<User>> GetAllUsers()
         {
             using (var context = new CombinedDbContext())

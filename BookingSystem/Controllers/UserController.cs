@@ -41,6 +41,13 @@ namespace BookingSystem.Controllers
         }
 
 
+        [HttpGet("public/basic-info")]
+        public async Task<IActionResult> GetBasicUserInfo()
+        {
+            var users = await _userRepository.GetBasicUserInfo();
+            return Ok(users);
+        }
+
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(long id, [FromBody] UserDTO updatedUser)
